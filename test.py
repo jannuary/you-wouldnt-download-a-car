@@ -20,14 +20,14 @@ selectedSong = search_results[int(input('Select a song to download.')) - 1]
 
 
 # # Downloader
-# ydl_opts = {
-#      'format' : 'bestaudio',
-#      'outtmpl' : selectedSong['artists'][0]['name'] + ' - ' + selectedSong['title'] + '.m4a',
-#      'quiet' : 'true'
-#      }
-# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-#      ydl.download([selectedSong['videoId']])
-# print('✅ Downloaded \033[95m\033[1m', selectedSong['title'], '\033[0m')
+ydl_opts = {
+     'format' : 'bestaudio',
+     'outtmpl' : selectedSong['artists'][0]['name'] + ' - ' + selectedSong['title'] + '.m4a',
+     'quiet' : 'true'
+     }
+with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+     ydl.download([selectedSong['videoId']])
+print('✅ Downloaded \033[95m\033[1m', selectedSong['title'], '\033[0m')
 
 # Thumbnail Grabber
 
