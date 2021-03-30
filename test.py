@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
 from ytmusicapi import YTMusic
-from bs4 import BeautifulSoup
 import azapi
 import youtube_dl
-import logging
 import wget
 
 ## Search songs
