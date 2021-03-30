@@ -38,12 +38,12 @@ print('✅ Downloaded \033[95m\033[1m', selectedSong['title'], '\033[0m')
 thumbnailURL = selectedSong['thumbnails'][0]['url'].split('=')[0]
 wget.download(thumbnailURL, 'thumbnail.jpg')
 
-#Lyrics Collector
+# Lyrics Collector
+# Data is acquired from AZLyrics.com using azapi.
 
-# url = 'https://api.lyrics.ovh/v1/' + selectedSong['artists'][0]['name'] + '/' + selectedSong['title'] 
-# print(url)
-# request = requests.get(url)
+api = azapi.AZlyrics()
 
-# soup = BeautifulSoup(request.content, "html.parser")
-# soupReheated = json.loads(str(soup))
-# print(soupReheated["lyrics"])
+api.artist = selectedSong['artists'][0]['name']
+api.title = selectedSong['title']
+
+api.getLyrics(save=True)
