@@ -1,9 +1,12 @@
 from __future__ import unicode_literals
 from ytmusicapi import YTMusic
+from bs4 import BeautifulSoup
+import azapi
 import youtube_dl
 import logging
 import wget
-
+# import requests
+# import json
 
 song_name = input('Enter song name ')
 ytmusic = YTMusic('headers_auth.json')
@@ -11,15 +14,16 @@ search_results = ytmusic.search(song_name, 'songs')
 
 # List Songs
 
-for i in range(10): 
-    print(i+1, '\033[95m\033[1m', search_results[i]['title'], '\033[0m', 'by', '\033[1m\033[96m', search_results[i]['artists'][0]['name'], '\033[0m', 'from', '\033[1m\033[91m', search_results[i]['album']['name'], '\033[0m')
-
+counter = 1
+for i in search_results: 
+    print(counter, '\033[95m\033[1m', i['title'], '\033[0m', 'by', '\033[1m\033[96m', i['artists'][0]['name'], '\033[0m', 'from', '\033[1m\033[91m', i['album']['name'], '\033[0m')
+    counter += 1
 
 # Select a song from the list
 selectedSong = search_results[int(input('Select a song to download.')) - 1]
 
 
-# # Downloader
+# Song Downloader
 ydl_opts = {
      'format' : 'bestaudio',
      'outtmpl' : selectedSong['artists'][0]['name'] + ' - ' + selectedSong['title'] + '.m4a',
@@ -32,5 +36,14 @@ print('✅ Downloaded \033[95m\033[1m', selectedSong['title'], '\033[0m')
 # Thumbnail Grabber
 
 thumbnailURL = selectedSong['thumbnails'][0]['url'].split('=')[0]
-print(thumbnailURL)
 wget.download(thumbnailURL, 'thumbnail.jpg')
+
+#Lyrics Collector
+
+# url = 'https://api.lyrics.ovh/v1/' + selectedSong['artists'][0]['name'] + '/' + selectedSong['title'] 
+# print(url)
+# request = requests.get(url)
+
+# soup = BeautifulSoup(request.content, "html.parser")
+# soupReheated = json.loads(str(soup))
+# print(soupReheated["lyrics"])
